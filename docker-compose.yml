@@ -1,0 +1,24 @@
+services:
+  node:
+    image: node:lts-slim
+    command: sh -c "yarn && yarn nx run-many --target=serve --all"
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    stdin_open: true
+    ports:
+      - "80:3000"
+      - "81:3001"
+    hostname: kolab.localhost
+
+  mysql:
+    image: mysql:lts
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=docker
+      - MYSQL_ROOT_PASSWORD=root
