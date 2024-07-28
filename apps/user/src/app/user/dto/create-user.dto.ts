@@ -1,15 +1,19 @@
-import {IsNotEmpty, IsNumber, IsOptional, IsString, Validate} from 'class-validator';
+import {IsNotEmpty, IsNumber, IsOptional, IsString} from 'class-validator';
+import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
 
 export class CreateUserDto {
+  @ApiProperty({ example: 'username' })
   @IsNotEmpty()
   @IsString()
   readonly username: string;
 
+  @ApiProperty({ example: 'password' })
   @IsNotEmpty()
   @IsString()
   readonly password: string
 
+  @ApiPropertyOptional({ description: 'parent-user-id' })
   @IsOptional()
   @IsNumber()
-  readonly parentUserId: number
+  readonly parentUserId: number | null
 }

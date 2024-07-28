@@ -2,37 +2,45 @@ import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
 import {UserService} from "../service/user.service";
 import {CreateUserDto} from "../dto/create-user.dto";
 import {UpdateUserDto} from "../dto/update-user.dto";
+import {ApiOperation, ApiTags} from "@nestjs/swagger";
 
 @Controller('users')
+@ApiTags('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @ApiOperation({description: 'List Employees'})
   findAll() {
     return this.userService.findAll();
   }
 
   @Get('tree')
+  @ApiOperation({description: 'List Employees with Hierarchy'})
   async getUserTree() {
     return await this.userService.getUserWithTree();
   }
 
   @Get(':id')
+  @ApiOperation({description: 'Find Employee by ID'})
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
 
   @Post()
+  @ApiOperation({description: 'Create Employee'})
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
 
   @Put(':id')
+  @ApiOperation({description: 'Update Employee'})
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
   }
 
   @Delete(':id')
+  @ApiOperation({description: 'Delete Employee'})
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
