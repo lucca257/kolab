@@ -15,14 +15,18 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const { parentUserId } = createUserDto;
-    if (parentUserId) {
-      const parentUser = await this.findOne(parentUserId)
-      if (!parentUser) {
-        throw new NotFoundException(`Parent User ID ${parentUserId} invalid`);
-      }
-    }
+    await this.validateParentId(createUserDto.parentUserId)
     return this.userRepository.save(createUserDto);
+  }
+
+  private async validateParentId(parentUserId: number) {
+    if (!parentUserId) {
+      return;
+    }
+    const parentUser = await this.findOne(parentUserId)
+    if (!parentUser) {
+      throw new NotFoundException(`Parent User ID ${parentUserId} invalid`);
+    }
   }
 
   findAll(): Promise<User[]> {
@@ -39,6 +43,7 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+    await this.validateParentId(updateUserDto.parentUserId)
     await this.userRepository.update(id, updateUserDto);
     return this.findOne(id);
   }

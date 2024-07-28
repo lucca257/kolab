@@ -11,5 +11,5 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsNumber()
-  parentUserId: number
+  readonly parentUserId: number
 }
