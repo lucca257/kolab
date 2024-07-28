@@ -51,7 +51,7 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    await this.validateParentId(updateUserDto.parentUserId)
+    await this.validateParentId(updateUserDto.parentUserId, id)
     await this.userRepository.update(id, updateUserDto);
     return this.findOne(id);
   }
@@ -60,9 +60,9 @@ export class UserService {
     await this.userRepository.delete(id);
   }
 
-  private async validateParentId(parentUserId: number): Promise<void> {
-    if (!parentUserId) {
-      return;
+  private async validateParentId(parentUserId: number, currentId: number | null = null): Promise<void> {
+    if (parentUserId === currentId) {
+      throw new NotFoundException(`Parent User ID same as Current ID`);
     }
     const parentUser: User = await this.findOne(parentUserId)
     if (!parentUser) {
