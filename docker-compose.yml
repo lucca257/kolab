@@ -1,7 +1,8 @@
 services:
   node:
     image: node:lts-slim
-    command: sh -c "yarn && yarn nx run-many --target=serve --all"
+#    command: sh -c "yarn && yarn nx run-many --target=serve --all"
+    command: "yarn && yarn nx run user:serve --watch"
     working_dir: /app
     volumes:
       - .:/app

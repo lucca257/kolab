@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@kolab/database": ["database/src/index.ts"]
+      "@kolab/database": ["database/src/index.ts"],
+      "@kolab/mysql": ["mysql/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
