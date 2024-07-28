@@ -1,6 +1,6 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {InjectRepository} from '@nestjs/typeorm';
+import {Repository} from 'typeorm';
 // eslint-disable-next-line @nx/enforce-module-boundaries
 import {User} from "../../../../../../libs/user/src";
 
@@ -61,6 +61,9 @@ export class UserService {
   }
 
   private async validateParentId(parentUserId: number, currentId: number | null = null): Promise<void> {
+    if (!parentUserId) {
+      return;
+    }
     if (parentUserId === currentId) {
       throw new NotFoundException(`Parent User ID same as Current ID`);
     }
