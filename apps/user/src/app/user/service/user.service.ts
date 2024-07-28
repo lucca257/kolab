@@ -19,23 +19,31 @@ export class UserService {
     return this.userRepository.save(createUserDto);
   }
 
-  private async validateParentId(parentUserId: number) {
-    if (!parentUserId) {
-      return;
-    }
-    const parentUser = await this.findOne(parentUserId)
-    if (!parentUser) {
-      throw new NotFoundException(`Parent User ID ${parentUserId} invalid`);
-    }
-  }
-
   findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  findTree() {
-    const users = this.findAll();
-    return users;
+  async getUserWithTree(): Promise<User[]> {
+    const users: User[] = await this.userRepository.find();
+
+    const userMap: { [key: string]: User[] } = {};
+
+    for (const user of users) {
+      const parentId: number  = user.parentUserId;
+      if (!userMap[parentId]) {
+        userMap[parentId] = [];
+      }
+      userMap[parentId].push(user);
+    }
+
+    function buildTree(parentId: number | null): User[] {
+      return (userMap[parentId] || []).map((user: User) => ({
+        ...user,
+        children: buildTree(user.id)
+      }));
+    }
+
+    return buildTree(null);
   }
 
   findOne(id: number): Promise<User> {
@@ -50,5 +58,15 @@ export class UserService {
 
   async remove(id: number): Promise<void> {
     await this.userRepository.delete(id);
+  }
+
+  private async validateParentId(parentUserId: number): Promise<void> {
+    if (!parentUserId) {
+      return;
+    }
+    const parentUser: User = await this.findOne(parentUserId)
+    if (!parentUser) {
+      throw new NotFoundException(`Parent User ID ${parentUserId} invalid`);
+    }
   }
 }

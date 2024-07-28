@@ -12,14 +12,14 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @Get('tree')
+  async getUserTree() {
+    return await this.userService.getUserWithTree();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
-  }
-
-  @Get('tree')
-  findTree() {
-    return this.userService.findAll();
   }
 
   @Post()
@@ -29,7 +29,6 @@ export class UserController {
 
   @Put(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    // console.log(updateUserDto)
     return this.userService.update(+id, updateUserDto);
   }
 

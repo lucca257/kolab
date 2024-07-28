@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm';
 
 @Entity()
 export class User {
@@ -11,6 +11,12 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
-  parentUserId: number;
+  @Column({ nullable: true })
+  parentUserId: number | null;
+
+  @OneToMany(() => User, user => user.parent)
+  children: User[];
+
+  @ManyToOne(() => User, user => user.children)
+  parent: User;
 }
