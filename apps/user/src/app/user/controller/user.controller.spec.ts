@@ -2,11 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {UserController} from "./user.controller";
 import {UserService} from "../service/user.service";
 import {Repository} from "typeorm";
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import {User} from "../../../../../../libs/user/src";
+
+import {User} from "@kolab/database";
 import {getRepositoryToken} from "@nestjs/typeorm";
 import {CreateUserDto} from "../dto/create-user.dto";
-import * as test from "node:test";
 import {NotFoundException} from "@nestjs/common";
 import {UpdateUserDto} from "../dto/update-user.dto";
 

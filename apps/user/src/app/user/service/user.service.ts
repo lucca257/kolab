@@ -1,11 +1,9 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
-// eslint-disable-next-line @nx/enforce-module-boundaries
-import {User} from "../../../../../../libs/user/src";
-
 import {CreateUserDto} from "../dto/create-user.dto";
 import {UpdateUserDto} from "../dto/update-user.dto";
+import {User} from "@kolab/database";
 
 @Injectable()
 export class UserService {
