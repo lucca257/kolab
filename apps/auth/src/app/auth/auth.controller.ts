@@ -1,6 +1,6 @@
 import {Body, Controller, Post} from "@nestjs/common";
 import {ApiOperation, ApiTags} from "@nestjs/swagger";
-import {CreateUserDto, UserLibService} from "@kolab/user-lib";
+import {CreateUserDto} from "@kolab/user-lib";
 import {AuthLoginDto, AuthService} from "@kolab/auth-lib";
 
 @ApiTags('auth')
@@ -18,9 +18,10 @@ export class AuthController {
 
   @Post('login')
   @ApiOperation({description: 'Login user'})
-  login(@Body() authLoginDto: AuthLoginDto) {
-    return null;
+  login(@Body() createUserDto: CreateUserDto) {
+    return this.authService.login(createUserDto);
   }
+
 
   @Post('logout')
   @ApiOperation({description: 'Logout user'})

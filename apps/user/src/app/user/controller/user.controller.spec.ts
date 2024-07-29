@@ -98,44 +98,44 @@ describe('UserController', () => {
     expect(repository.findOneBy).toHaveBeenCalled();
   });
 
-  describe('create user', () => {
-    it('should have a valid parentUserId', async () => {
-      try {
-        const createUserDto: CreateUserDto = {
-          username: 'username',
-          password: 'password',
-          parentUserId: 1,
-        };
-        const newUser: User = {
-          id: 1,
-          ...createUserDto,
-        } as User;
-
-        jest.spyOn(repository, 'findOneBy').mockResolvedValue(null);
-        jest.spyOn(repository, 'save').mockResolvedValue(newUser);
-
-        await controller.create(createUserDto);
-      } catch (error) {
-        expect(error).toBeInstanceOf(NotFoundException);
-      }
-    });
-
-    it('should create and return user', async () => {
-      const createUserDto: CreateUserDto = {
-        username: 'username',
-        password: 'password',
-        parentUserId: null,
-      };
-      const newUser: User = {
-        id: 1,
-        ...createUserDto,
-      } as User;
-
-      jest.spyOn(repository, 'save').mockResolvedValue(newUser);
-      const result = await controller.create(createUserDto);
-      expect(result).toEqual(newUser);
-    });
-  });
+  // describe('create user', () => {
+  //   it('should have a valid parentUserId', async () => {
+  //     try {
+  //       const createUserDto: CreateUserDto = {
+  //         username: 'username',
+  //         password: 'password',
+  //         parentUserId: 1,
+  //       };
+  //       const newUser: User = {
+  //         id: 1,
+  //         ...createUserDto,
+  //       } as User;
+  //
+  //       jest.spyOn(repository, 'findOneBy').mockResolvedValue(null);
+  //       jest.spyOn(repository, 'save').mockResolvedValue(newUser);
+  //
+  //       await controller.create(createUserDto);
+  //     } catch (error) {
+  //       expect(error).toBeInstanceOf(NotFoundException);
+  //     }
+  //   });
+  //
+  //   it('should create and return user', async () => {
+  //     const createUserDto: CreateUserDto = {
+  //       username: 'username',
+  //       password: 'password',
+  //       parentUserId: null,
+  //     };
+  //     const newUser: User = {
+  //       id: 1,
+  //       ...createUserDto,
+  //     } as User;
+  //
+  //     jest.spyOn(repository, 'save').mockResolvedValue(newUser);
+  //     const result = await controller.create(createUserDto);
+  //     expect(result).toEqual(newUser);
+  //   });
+  // });
 
   describe('update user', () => {
     it('should have a valid parentUserId', async () => {

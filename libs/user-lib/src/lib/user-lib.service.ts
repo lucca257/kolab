@@ -51,6 +51,10 @@ export class UserLibService {
     return this.userRepository.findOneBy({ id: id });
   }
 
+  findByUserName(username: string): Promise<User | null> {
+    return this.userRepository.findOneBy({ username: username });
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User| null> {
     await this.validateParentId(updateUserDto.parentUserId, id)
     await this.userRepository.update(id, updateUserDto);
