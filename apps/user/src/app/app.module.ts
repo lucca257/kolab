@@ -1,21 +1,11 @@
 import { Module } from '@nestjs/common';
 
-import {TypeOrmModule} from "@nestjs/typeorm";
 import {UserModule} from "./user/user.module";
+import {DatabaseModule} from "@kolab/database";
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'root',
-      database: 'docker',
-      autoLoadEntities: true, //for dev env only
-      entities: [],
-      synchronize: true,
-    }),
+    DatabaseModule,
     UserModule
   ],
 })
