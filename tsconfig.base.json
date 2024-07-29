@@ -15,8 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@kolab/database": ["database/src/index.ts"],
-      "@kolab/mysql": ["mysql/src/index.ts"]
+      "@kolab/auth-lib": ["libs/auth-lib/src/index.ts"],
+      "@kolab/database": ["libs/database/src/index.ts"],
+      "@kolab/user-lib": ["libs/user-lib/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

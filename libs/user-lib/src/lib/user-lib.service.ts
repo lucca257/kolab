@@ -1,12 +1,12 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
-import {CreateUserDto} from "../dto/create-user.dto";
-import {UpdateUserDto} from "../dto/update-user.dto";
-import {User} from "@kolab/database";
+import {CreateUserDto} from "./dto/create-user.dto";
+import {UpdateUserDto} from "./dto/update-user.dto";
+import {User} from "./user.entity";
 
 @Injectable()
-export class UserService {
+export class UserLibService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
@@ -44,7 +44,7 @@ export class UserService {
     return buildTree(null);
   }
 
-  findOne(id: number): Promise<User> {
+  findOne(id: number): Promise<User | null> {
     return this.userRepository.findOneBy({ id: id });
   }
 
@@ -58,7 +58,7 @@ export class UserService {
     await this.userRepository.delete(id);
   }
 
-  private async validateParentId(parentUserId: number, currentId: number | null = null): Promise<void> {
+  private async validateParentId(parentUserId: number | null = null, currentId: number | null = null): Promise<void> {
     if (!parentUserId) {
       return;
     }

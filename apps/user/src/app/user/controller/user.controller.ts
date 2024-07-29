@@ -1,13 +1,13 @@
 import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
-import {UserService} from "../service/user.service";
-import {CreateUserDto} from "../dto/create-user.dto";
-import {UpdateUserDto} from "../dto/update-user.dto";
+import {UserLibService} from "../../../../../../libs/user-lib/src/lib/user-lib.service";
+import {CreateUserDto} from "../../../../../../libs/user-lib/src/lib/dto/create-user.dto";
+import {UpdateUserDto} from "../../../../../../libs/user-lib/src/lib/dto/update-user.dto";
 import {ApiOperation, ApiTags} from "@nestjs/swagger";
 
 @Controller('users')
 @ApiTags('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserLibService) {}
 
   @Get()
   @ApiOperation({description: 'List Employees'})

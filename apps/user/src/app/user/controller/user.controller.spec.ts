@@ -1,24 +1,23 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import {UserController} from "./user.controller";
-import {UserService} from "../service/user.service";
+import {User, UserLibService} from "@kolab/user-lib";
 import {Repository} from "typeorm";
 
-import {User} from "@kolab/database";
 import {getRepositoryToken} from "@nestjs/typeorm";
-import {CreateUserDto} from "../dto/create-user.dto";
+import {CreateUserDto} from "@kolab/user-lib";
 import {NotFoundException} from "@nestjs/common";
-import {UpdateUserDto} from "../dto/update-user.dto";
+import {UpdateUserDto} from "@kolab/user-lib";
 
 describe('UserController', () => {
   let controller: UserController;
-  let service: UserService;
+  let service: UserLibService;
   let repository: Repository<User>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
       providers: [
-        UserService,
+        UserLibService,
         {
           provide: getRepositoryToken(User),
           useClass: Repository,
@@ -27,7 +26,7 @@ describe('UserController', () => {
     }).compile();
 
     controller = module.get<UserController>(UserController);
-    service = module.get<UserService>(UserService);
+    service = module.get<UserLibService>(UserLibService);
     repository = module.get<Repository<User>>(getRepositoryToken(User));
   });
 
