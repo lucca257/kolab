@@ -13,7 +13,8 @@ export class UserLibService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    await this.validateParentId(createUserDto.parentUserId)
+    await this.validateUsername(createUserDto.username);
+    await this.validateParentId(createUserDto.parentUserId);
     return this.userRepository.save(createUserDto);
   }
 
@@ -70,6 +71,15 @@ export class UserLibService {
     const parentUser: User | null = await this.findOne(parentUserId)
     if (!parentUser) {
       throw new NotFoundException(`Parent User ID ${parentUserId} invalid`);
+    }
+  }
+
+  private async validateUsername(username: string) {
+    const user = await this.userRepository.findOneBy({
+      username: username
+    });
+    if (user) {
+      throw new NotFoundException(`Username not valid`);
     }
   }
 }

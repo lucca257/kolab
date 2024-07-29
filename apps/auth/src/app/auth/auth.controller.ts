@@ -8,13 +8,12 @@ import {AuthLoginDto, AuthService} from "@kolab/auth-lib";
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private userService: UserLibService
   ){}
 
   @Post('register')
   @ApiOperation({description: 'Register user'})
   create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+    return this.authService.register(createUserDto);
   }
 
   @Post('login')

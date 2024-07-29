@@ -1,11 +1,19 @@
-import {Injectable, UnauthorizedException} from "@nestjs/common";
+import {Inject, Injectable, UnauthorizedException} from "@nestjs/common";
 import {AuthLoginDto} from "./dto/auth-login.dto";
+import {CreateUserDto, User, UserLibService} from "@kolab/user-lib";
+import {HashServiceInterface} from "../hash/hash-service.interface";
 
 @Injectable()
 export class AuthService {
+  constructor(
+    private userService: UserLibService,
+    @Inject('HASH_SERVICE')
+    private hashService: HashServiceInterface
+  ){}
 
-  async register() {
-    //validate
+  async register(createUserDto: CreateUserDto) {
+    createUserDto.password = await this.hashService.hash(createUserDto.password);
+    return await this.userService.create(createUserDto)
   }
 
   login(authLoginDto: AuthLoginDto) {

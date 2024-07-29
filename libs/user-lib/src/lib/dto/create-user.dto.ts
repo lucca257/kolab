@@ -10,7 +10,7 @@ export class CreateUserDto {
   @ApiProperty({ example: 'password' })
   @IsNotEmpty()
   @IsString()
-  readonly password: string
+  password: string
 
   @ApiPropertyOptional({ description: 'parent-user-id' })
   @IsOptional()
