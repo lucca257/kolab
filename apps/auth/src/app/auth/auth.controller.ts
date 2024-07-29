@@ -22,7 +22,6 @@ export class AuthController {
     return this.authService.login(createUserDto);
   }
 
-
   @Post('logout')
   @ApiOperation({description: 'Logout user'})
   logout() {
