@@ -1,0 +1,25 @@
+{
+  "projects": {
+    "mysql": {
+      "type": "library",
+      "root": "libs/mysql",
+      "entryFile": "index",
+      "sourceRoot": "libs/mysql/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/mysql/tsconfig.lib.json"
+      }
+    },
+    "user": {
+      "type": "library",
+      "root": "libs/user",
+      "entryFile": "index",
+      "sourceRoot": "libs/user/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/user/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": true
+  }
+}

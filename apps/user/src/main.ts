@@ -21,12 +21,12 @@ async function bootstrap() {
     .addTag('users')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/', app, document);
+  SwaggerModule.setup(globalPrefix, app, document);
 
   const port = 3001;
   await app.listen(port);
   Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 User Application is running on: http://localhost:${port}/${globalPrefix}`
   );
 }
 

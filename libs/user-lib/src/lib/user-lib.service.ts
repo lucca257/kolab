@@ -27,6 +27,7 @@ export class UserLibService {
     const userMap: { [key: string]: User[] } = {};
 
     for (const user of users) {
+      // @ts-ignore
       const parentId: number  = user.parentUserId;
       if (!userMap[parentId]) {
         userMap[parentId] = [];
@@ -35,6 +36,7 @@ export class UserLibService {
     }
 
     function buildTree(parentId: number | null): User[] {
+      // @ts-ignore
       return (userMap[parentId] || []).map((user: User) => ({
         ...user,
         children: buildTree(user.id)
@@ -48,7 +50,7 @@ export class UserLibService {
     return this.userRepository.findOneBy({ id: id });
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User| null> {
     await this.validateParentId(updateUserDto.parentUserId, id)
     await this.userRepository.update(id, updateUserDto);
     return this.findOne(id);
@@ -65,7 +67,7 @@ export class UserLibService {
     if (parentUserId === currentId) {
       throw new NotFoundException(`Parent User ID same as Current ID`);
     }
-    const parentUser: User = await this.findOne(parentUserId)
+    const parentUser: User | null = await this.findOne(parentUserId)
     if (!parentUser) {
       throw new NotFoundException(`Parent User ID ${parentUserId} invalid`);
     }

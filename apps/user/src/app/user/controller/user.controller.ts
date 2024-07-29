@@ -27,12 +27,6 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
-  @Post()
-  @ApiOperation({description: 'Create Employee'})
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
-
   @Put(':id')
   @ApiOperation({description: 'Update Employee'})
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {

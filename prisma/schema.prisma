@@ -15,8 +15,7 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
   username     String   @unique
-  password     String?
+  password     String
   parentUserId Int?
 }
