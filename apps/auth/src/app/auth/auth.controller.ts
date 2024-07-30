@@ -36,7 +36,8 @@ export class AuthController {
 
   @Post('logout')
   @ApiOperation({description: 'Logout user'})
-  logout() {
-    return null;
+  logout(@Res() res: Response) {
+    res.clearCookie('Authentication');
+    return res.send();
   }
 }
