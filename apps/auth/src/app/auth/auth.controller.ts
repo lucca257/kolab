@@ -1,7 +1,7 @@
 import {Body, Controller, Post, Req, Res} from "@nestjs/common";
 import {ApiOperation, ApiTags} from "@nestjs/swagger";
 import {CreateUserDto} from "@kolab/user-lib";
-import { AuthService} from "@kolab/auth-lib";
+import {AuthLoginDto, AuthService} from "@kolab/auth-lib";
 import { Response } from 'express';
 
 @ApiTags('auth')
@@ -19,8 +19,8 @@ export class AuthController {
 
   @Post('login')
   @ApiOperation({description: 'Login user'})
-  async login(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-    const authResponse = await this.authService.login(createUserDto);
+  async login(@Body() authLoginDto: AuthLoginDto, @Res() res: Response) {
+    const authResponse = await this.authService.login(authLoginDto);
 
     res.cookie(
       'Authentication',

@@ -2,6 +2,7 @@ import {Inject, Injectable, UnauthorizedException} from "@nestjs/common";
 import {CreateUserDto, User, UserLibService} from "@kolab/user-lib";
 import {HashServiceInterface} from "../hash/hash-service.interface";
 import {JwtService} from "@nestjs/jwt";
+import {AuthLoginDto} from "./dto/auth-login.dto";
 
 @Injectable()
 export class AuthService {
@@ -17,10 +18,10 @@ export class AuthService {
     return await this.userService.create(createUserDto)
   }
 
-  async login(createUserDto: CreateUserDto) {
-    const user: User | null = await this.userService.findByUserName(createUserDto.username);
+  async login(authLoginDto: AuthLoginDto) {
+    const user: User | null = await this.userService.findByUserName(authLoginDto.username);
 
-    if (user && await this.hashService.compare(createUserDto.password, user.password)) {
+    if (user && await this.hashService.compare(authLoginDto.password, user.password)) {
       const payload = { sub: user.id, username: user.username };
       return {
         access_token : this.jwtService.sign(payload)
