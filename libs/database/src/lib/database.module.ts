@@ -5,13 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'mysql',
       port: 3306,
       username: 'root',
       password: 'root',
       database: 'docker',
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false, //develop only
     }),
   ],
   exports: [TypeOrmModule],
