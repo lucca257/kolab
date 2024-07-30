@@ -15,14 +15,14 @@ docker exec -it kolab-node-1 yarn prisma migrate dev
 
 # O que foi feito ?
 
-autenticação
+## autenticação
 - [x] registrar usuário
 - [x] login usuário
 - [x] logout usuário
 - [x] Autenticação via JWT
 - [x] middleware para verificar usuário logado
 
-usuário
+## usuário
 - [x] listar usuário
 - [x] listar usuário com hierarquias
 - [x] detalhes de usuário
@@ -30,7 +30,7 @@ usuário
 - [x] alterar usuário
 - [x] Teste unitário do controller de usuários
 
-infra
+## infra
 - [x] Documentação swagger dos endpoints
 - [x] Criar projeto como um workspace NX com libs separadas
 - [x] Docker
@@ -41,11 +41,10 @@ infra
 
 # observações
 
-Tentei ao máximo reaproveitar a lógica e utilizar um pouco de inversão de depencencia, exemplo no uso do serviço do bcrypt, onde criei uma interface para uso de inversão de depencia, podendo trocar facilmente a biblioteca por outra sem grandes problemas.
-Busquei reaproveitar o módulo de banco de dados pois o banco era comportilhado e reutilizar as libs usando os módulos do nx com o nestjs.
+Procurei maximizar o reaproveitamento de lógica e aplicar princípios de inversão de dependência. Um exemplo disso é a utilização do serviço bcrypt, onde criei uma interface para permitir a troca da biblioteca sem dificuldades. Além disso, busquei reutilizar o módulo de banco de dados, dado que o banco é compartilhado, e aproveitei as bibliotecas existentes usando os módulos do Nx com NestJS.
 
 # O que faria de melhor
 
-- No endpoint de listar usuários com árvores, só deixaria ver a arvore completa se estiver um nó acima.
-- Usar redis ou banco de dados para controle e expiração do token, criando uma black-list de tokens.
-- Refatorar o teste unitário de controlle de usuário para e2e, e também fazer testes unitários de auth
+- No endpoint para listar usuários em formato de árvore, restrinja a visualização da árvore com base no nível do nó. Por exemplo, um usuário no nível 3 não deve ter acesso a informações do nível 2 e assim por diante.
+- Implementar o uso de Redis ou um banco de dados para controle e expiração de tokens, incluindo a criação de uma lista negra de tokens.
+- Refatorar os testes unitários do controlador de usuários para testes end-to-end (e2e) e também criar testes unitários para autenticação (auth).
