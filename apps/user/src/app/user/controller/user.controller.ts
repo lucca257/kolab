@@ -1,11 +1,11 @@
-import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
-import {UserLibService} from "../../../../../../libs/user-lib/src/lib/user-lib.service";
-import {CreateUserDto} from "../../../../../../libs/user-lib/src/lib/dto/create-user.dto";
-import {UpdateUserDto} from "../../../../../../libs/user-lib/src/lib/dto/update-user.dto";
+import {Body, Controller, Delete, Get, Param, Put, UseGuards} from '@nestjs/common';
 import {ApiOperation, ApiTags} from "@nestjs/swagger";
+import {UpdateUserDto, UserLibService} from "@kolab/user-lib";
+import {AuthGuard} from "@nestjs/passport";
 
 @Controller('users')
 @ApiTags('users')
+@UseGuards(AuthGuard('jwt'))
 export class UserController {
   constructor(private readonly userService: UserLibService) {}
 
