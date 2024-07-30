@@ -25,26 +25,24 @@ export class UserLibService {
   async getUserWithTree(): Promise<User[]> {
     const users: User[] = await this.userRepository.find();
 
-    const userMap: { [key: string]: User[] } = {};
+    const userMap: Map<number, User[]> = new Map();
 
     for (const user of users) {
-      // @ts-ignore
-      const parentId: number  = user.parentUserId;
-      if (!userMap[parentId]) {
-        userMap[parentId] = [];
+      const parentId = user.parentUserId ?? 0;
+      if (!userMap.has(parentId)) {
+        userMap.set(parentId, []);
       }
-      userMap[parentId].push(user);
+      userMap.get(parentId)?.push(user);
     }
 
-    function buildTree(parentId: number | null): User[] {
-      // @ts-ignore
-      return (userMap[parentId] || []).map((user: User) => ({
+    function buildTree(parentId: number): User[] {
+      return (userMap.get(parentId) || []).map((user) => ({
         ...user,
         children: buildTree(user.id)
       }));
     }
 
-    return buildTree(null);
+    return buildTree(0);
   }
 
   findOne(id: number): Promise<User | null> {
